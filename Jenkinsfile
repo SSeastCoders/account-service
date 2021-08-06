@@ -1,15 +1,17 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('SonarQube analysis') {
             steps {
-                sh 'mvn -DskipTests clean package'
+                withSonarQubeEnv('SonarQube') {
+                    sh "mvn sonar:sonar"
+                }
             }
         }
-    }
-    post {
-        success {
-            archiveArtifacts artifacts: '**/*.jar'
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
         }
     }
 }
