@@ -1,4 +1,4 @@
-package com.ss.eastcoderbank.accountservice;
+package com.ss.eastcoderbank.accountapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
