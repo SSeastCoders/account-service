@@ -1,6 +1,5 @@
 package com.ss.eastcoderbank.accountapi.service;
 
-import com.ss.eastcoderbank.accountapi.mapper.AccountMapper;
 import com.ss.eastcoderbank.accountapi.dto.CreateUserAccountDto;
 import com.ss.eastcoderbank.accountapi.mapper.UserAccCreateMapper;
 import com.ss.eastcoderbank.core.exeception.UserNotFoundException;
@@ -9,6 +8,7 @@ import com.ss.eastcoderbank.core.model.user.User;
 import com.ss.eastcoderbank.core.repository.AccountRepository;
 import com.ss.eastcoderbank.core.repository.UserRepository;
 import com.ss.eastcoderbank.core.transferdto.AccountDto;
+import com.ss.eastcoderbank.core.transfermapper.AccountMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +41,6 @@ public class AccountService {
     }
 
     public List<AccountDto> getAccountsByUser(Integer id) {
-        return accountRepository.findAccountByUser(id).stream().map(accountMapper::mapToDto).collect(Collectors.toList());
+        return accountRepository.findAccountByUsersId(id).stream().map(accountMapper::mapToDto).collect(Collectors.toList());
     }
 }

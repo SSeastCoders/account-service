@@ -26,6 +26,6 @@ public class AccountController {
 
     @GetMapping("/users/{id}")
     public ResponseEntity<List<AccountDto>> getAccountByUser(@PathVariable Integer id) {
-        return new ResponseEntity<>(accountService.getAccountsByUser(id), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(accountService.getAccountsByUser(id), HttpStatus.OK);
     }
 }
