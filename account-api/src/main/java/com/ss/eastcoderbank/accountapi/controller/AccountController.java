@@ -28,4 +28,15 @@ public class AccountController {
     public ResponseEntity<List<AccountDto>> getAccountByUser(@PathVariable Integer id) {
         return new ResponseEntity<>(accountService.getAccountsByUser(id), HttpStatus.OK);
     }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<String> deactivateAccount(@PathVariable Integer id) {
+        accountService.deactivateAccount(id);
+        return new ResponseEntity<>("Account deleted", HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AccountDto>> getAllAccounts() {
+        return new ResponseEntity<>(accountService.getAccounts(), HttpStatus.OK);
+    }
 }
