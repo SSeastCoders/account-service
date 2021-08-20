@@ -8,11 +8,13 @@ import com.ss.eastcoderbank.core.repository.UserRoleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
+@Profile("h2")
 @Component
 @AllArgsConstructor
 public class PopulateDatabase implements ApplicationRunner {
