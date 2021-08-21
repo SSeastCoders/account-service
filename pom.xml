@@ -26,15 +26,15 @@
     <profiles>
         <profile>
             <id>h2</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <properties>
                 <spring.profiles.active>h2</spring.profiles.active>
             </properties>
         </profile>
         <profile>
             <id>mysql</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <spring.profiles.active>mysql</spring.profiles.active>
             </properties>
@@ -52,17 +52,4 @@
             </properties>
         </profile>
     </profiles>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
-
 </project>
