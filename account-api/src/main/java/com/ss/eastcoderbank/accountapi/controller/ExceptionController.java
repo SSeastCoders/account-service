@@ -1,6 +1,7 @@
 package com.ss.eastcoderbank.accountapi.controller;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.ss.eastcoderbank.core.exeception.AccountNotEmptyException;
 import com.ss.eastcoderbank.core.exeception.AccountNotFoundException;
 import com.ss.eastcoderbank.core.exeception.UserNotFoundException;
 import com.ss.eastcoderbank.core.exeception.response.ErrorMessage;
@@ -51,6 +52,11 @@ public class ExceptionController {
 
     @ExceptionHandler(AccountNotFoundException.class)
     public ResponseEntity<ErrorMessage> duplicateConstraints(AccountNotFoundException exception) {
-        return new ResponseEntity<>(new ErrorMessage(HttpStatus.CONFLICT.toString(), exception.getMessage()), HttpStatus.CONFLICT);
+        return new ResponseEntity<>(new ErrorMessage(HttpStatus.NOT_FOUND.toString(), exception.getMessage()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(AccountNotEmptyException.class)
+    public ResponseEntity<ErrorMessage> duplicateConstraints(AccountNotEmptyException exception) {
+        return new ResponseEntity<>(new ErrorMessage(HttpStatus.PRECONDITION_FAILED.toString(), exception.getMessage()), HttpStatus.PRECONDITION_FAILED);
     }
 }

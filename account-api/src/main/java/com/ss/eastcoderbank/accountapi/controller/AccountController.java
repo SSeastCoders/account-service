@@ -1,6 +1,7 @@
 package com.ss.eastcoderbank.accountapi.controller;
 
 import com.ss.eastcoderbank.accountapi.dto.CreateUserAccountDto;
+import com.ss.eastcoderbank.accountapi.dto.UpdateAccountDto;
 import com.ss.eastcoderbank.accountapi.service.AccountService;
 import com.ss.eastcoderbank.core.transferdto.AccountDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,19 @@ public class AccountController {
         return new ResponseEntity<>("Account deleted", HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<AccountDto> getAccount(@PathVariable Integer id) {
+        return new ResponseEntity<>(accountService.getAccountById(id), HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<List<AccountDto>> getAllAccounts() {
         return new ResponseEntity<>(accountService.getAccounts(), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.PARTIAL_CONTENT)
+    public void updateAccount(@Valid @RequestBody UpdateAccountDto updateAccountDto, @PathVariable Integer id) {
+        accountService.updateAccount(updateAccountDto, id);
     }
 }
