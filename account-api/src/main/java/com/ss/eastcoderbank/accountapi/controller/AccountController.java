@@ -47,8 +47,8 @@ public class AccountController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateAccount(@Valid @RequestBody UpdateAccountDto updateAccountDto, @PathVariable Integer id) {
+    @ResponseStatus(HttpStatus.PARTIAL_CONTENT)
+    public void updateAccount(@Valid @RequestBody UpdateAccountDto updateAccountDto, @PathVariable Integer id) {
         accountService.updateAccount(updateAccountDto, id);
-        return new ResponseEntity<>("Account updated", HttpStatus.PARTIAL_CONTENT);
     }
 }

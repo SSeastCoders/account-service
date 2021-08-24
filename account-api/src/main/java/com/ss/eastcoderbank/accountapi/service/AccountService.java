@@ -74,8 +74,13 @@ public class AccountService {
             Account account = accountRepository.getById(id);
             updateAccountMapper.updateEntity(updateAccountDto, account);
             List<User> users = new ArrayList<>();
-            updateAccountDto.getUsersIds().forEach(integer -> users.add(userRepository.findById(integer).orElseThrow(UserNotFoundException::new)));
-            account.setUsers(users);
+            try {
+                updateAccountDto.getUsersIds().forEach(integer -> users.add(userRepository.findById(integer).orElseThrow(UserNotFoundException::new)));
+                account.setUsers(users);
+            } catch (NullPointerException e) {
+                throw new UserNotFoundException();
+                //no users provided in update
+            }
             accountRepository.save(account);
             return account.getId();
         } catch (EntityNotFoundException e) {
