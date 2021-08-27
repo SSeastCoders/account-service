@@ -10,8 +10,7 @@ pipeline {
     stages {
         stage('Clean and Test') {
             steps {
-                //sh 'mvn clean test'
-                sh 'mvn clean package -P ${mavenProfile} -Dskiptests'
+                sh 'mvn clean test'
             }
         }
         stage('SonarQube Analysis') {
