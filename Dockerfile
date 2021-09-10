@@ -1,6 +1,6 @@
 FROM openjdk:11-jdk
 
-RUN addgroup -S spring && adduser -S spring -G spring
+RUN adduser --system --group spring
 USER spring:spring
 
 ARG SERVICE=account-api
