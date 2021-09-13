@@ -1,8 +1,8 @@
 package com.ss.eastcoderbank.accountapi.controller;
 
-import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
-
+import static org.junit.Assert.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ss.eastcoderbank.accountapi.dto.CreateUserAccountDto;
 import com.ss.eastcoderbank.accountapi.dto.UpdateAccountDto;
@@ -15,10 +15,16 @@ import java.time.LocalDate;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -197,6 +203,29 @@ public class AccountControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content().string("[]"));
+    }
+
+
+
+    @Test
+    void testGetPaginatedAccountsShouldReturnAccountPage() {
+        Page<AccountDto> accountPage = Mockito.mock(Page.class);
+        AccountService mockAccountService = mock(AccountService.class);
+
+        when(mockAccountService.getPaginatedAccounts(0, 10)).thenReturn(accountPage);
+
+        assertNotNull(accountPage);
+
+    }
+
+    @Test
+    void testGetPaginatedAccountsShouldCallAccountService() {
+
+        AccountService mockAccountService = mock(AccountService.class);
+
+        mockAccountService.getPaginatedAccounts(0, 10);
+        verify(mockAccountService, times(1)).getPaginatedAccounts(0,10);
+
     }
 }
 
