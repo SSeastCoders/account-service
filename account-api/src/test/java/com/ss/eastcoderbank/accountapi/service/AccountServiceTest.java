@@ -1,13 +1,11 @@
 package com.ss.eastcoderbank.accountapi.service;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import com.ss.eastcoderbank.accountapi.dto.CreateUserAccountDto;
 import com.ss.eastcoderbank.accountapi.dto.UpdateAccountDto;
@@ -36,9 +34,12 @@ import javax.persistence.EntityNotFoundException;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -646,6 +647,19 @@ public class AccountServiceTest {
         verify(this.accountMapper).mapToDto((Account) any());
         assertTrue(this.accountService.getAccounts().isEmpty());
     }
+
+    @Test
+    public void getPaginatedAccountsShouldReturnPageFromRepository() {
+        Page<Account> accountPage = Mockito.mock(Page.class);
+        AccountRepository mockAccountRepo = mock(AccountRepository.class);
+
+        when(mockAccountRepo.findAll(Mockito.any(PageRequest.class))).thenReturn(accountPage);
+
+        assertNotNull(accountPage);
+    }
+
+
+
 
 }
 

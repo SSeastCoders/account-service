@@ -5,6 +5,8 @@ import com.ss.eastcoderbank.accountapi.dto.UpdateAccountDto;
 import com.ss.eastcoderbank.accountapi.service.AccountService;
 import com.ss.eastcoderbank.core.transferdto.AccountDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +46,12 @@ public class AccountController {
     @GetMapping
     public ResponseEntity<List<AccountDto>> getAllAccounts() {
         return new ResponseEntity<>(accountService.getAccounts(), HttpStatus.OK);
+    }
+
+    @GetMapping("/accountsPage")
+    public Page<AccountDto> getPaginatedAccounts(@RequestParam(name="page") Integer pageNumber, @RequestParam(name="size") Integer pageSize, Pageable page) {
+
+        return accountService.getPaginatedAccounts(pageNumber, pageSize);
     }
 
     @PutMapping("/{id}")
