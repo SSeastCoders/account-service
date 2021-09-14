@@ -20,6 +20,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -103,10 +104,13 @@ public class AccountService {
         return accountMapper.mapToDto(accountRepository.findById(id).orElseThrow(AccountNotFoundException::new));
     }
 
-    public Page<AccountDto> getPaginatedAccounts(Integer pageNumber, Integer pageSize) {
+    public Page<AccountDto> getAccounts(Integer pageNumber, Integer pageSize, boolean asc, String sort) {
         Page<AccountDto> req;
-        req = accountRepository.findAll(PageRequest.of(pageNumber, pageSize)).map(account -> accountMapper.mapToDto(account));
+        if (sort != null) {
+            req = accountRepository.findAll(PageRequest.of(pageNumber, pageSize, Sort.by(asc ? Sort.Direction.ASC : Sort.Direction.DESC, sort))).map(account -> accountMapper.mapToDto(account));
+        } else {
+            req = accountRepository.findAll(PageRequest.of(pageNumber, pageSize)).map(account -> accountMapper.mapToDto(account));
+        }
         return req;
-
     }
 }

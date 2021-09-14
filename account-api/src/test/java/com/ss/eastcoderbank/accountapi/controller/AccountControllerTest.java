@@ -212,7 +212,7 @@ public class AccountControllerTest {
         Page<AccountDto> accountPage = Mockito.mock(Page.class);
         AccountService mockAccountService = mock(AccountService.class);
 
-        when(mockAccountService.getPaginatedAccounts(0, 10)).thenReturn(accountPage);
+        when(mockAccountService.getAccounts(0, 10, false, null)).thenReturn(accountPage);
 
         assertNotNull(accountPage);
 
@@ -223,8 +223,8 @@ public class AccountControllerTest {
 
         AccountService mockAccountService = mock(AccountService.class);
 
-        mockAccountService.getPaginatedAccounts(0, 10);
-        verify(mockAccountService, times(1)).getPaginatedAccounts(0,10);
+        mockAccountService.getAccounts(0, 10, false, null);
+        verify(mockAccountService, times(1)).getAccounts(0,10,false, null);
 
     }
 }

@@ -49,9 +49,9 @@ public class AccountController {
     }
 
     @GetMapping("/accountsPage")
-    public Page<AccountDto> getPaginatedAccounts(@RequestParam(name="page") Integer pageNumber, @RequestParam(name="size") Integer pageSize, Pageable page) {
-
-        return accountService.getPaginatedAccounts(pageNumber, pageSize);
+    public ResponseEntity<Page<AccountDto>> getPaginatedAccounts(@RequestParam(name="page") Integer pageNumber, @RequestParam(name="size") Integer pageSize, @RequestParam(value="asc", required = false) boolean asc, @RequestParam(value = "sort", required = false) String sort, Pageable page) {
+        return new ResponseEntity<>(accountService.getAccounts(pageNumber, pageSize, asc, sort), HttpStatus.OK);
+        //return accountService.getPaginatedAccounts(pageNumber, pageSize);
     }
 
     @PutMapping("/{id}")
