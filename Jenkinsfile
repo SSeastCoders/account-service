@@ -3,7 +3,7 @@ pipeline {
     agent any
     environment {
         serviceName = 'account-service'
-        awsRegion = 'us-east-1'
+        //awsRegion = 'us-east-1'
         mavenProfile = 'dev'
         commitIDShort = sh(returnStdout: true, script: "git rev-parse --short HEAD")
     }
@@ -32,6 +32,7 @@ pipeline {
                 sh 'mvn clean package -P ${mavenProfile} -Dskiptests'
             }
         }
+}
 //         stage('Docker Image Build and ECR Image Push') {
 //             steps {
 //                 withCredentials([string(credentialsId: 'awsAccountNumber', variable: 'awsID')]) {
