@@ -15,7 +15,7 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarScanner') {
+                withSonarQubeEnv('SonarQubeServer') {
                     sh 'mvn sonar:sonar'
                 }
             }
@@ -27,12 +27,13 @@ pipeline {
                 }
             }
         }
-        stage('Maven Build') {
-            steps {
-                sh 'mvn clean package -P ${mavenProfile} -Dskiptests'
-            }
-        }
 }
+//         stage('Maven Build') {
+//             steps {
+//                 sh 'mvn clean package -P ${mavenProfile} -Dskiptests'
+//             }
+//         }
+
 //         stage('Docker Image Build and ECR Image Push') {
 //             steps {
 //                 withCredentials([string(credentialsId: 'awsAccountNumber', variable: 'awsID')]) {

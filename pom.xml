@@ -21,6 +21,7 @@
     <properties>
         <maven.compiler.soruce>11</maven.compiler.soruce>
         <maven.compiler.target>11</maven.compiler.target>
+        <sonar.projectKey>${project.artifactId}</sonar.projectKey>
     </properties>
 
     <profiles>
