@@ -2,6 +2,7 @@
 pipeline {
     agent any
     environment {
+        PATH="/usr/local/bin:${PATH}"
         serviceName = 'account-service'
         //awsRegion = 'us-east-1'
         mavenProfile = 'dev'
