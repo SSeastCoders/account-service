@@ -59,4 +59,8 @@ public class AccountController {
     public void updateAccount(@Valid @RequestBody UpdateAccountDto updateAccountDto, @PathVariable Integer id) {
         accountService.updateAccount(updateAccountDto, id);
     }
+
+    @GetMapping("/health")
+    @ResponseStatus(HttpStatus.OK)
+    public void healthCheck() {}
 }
