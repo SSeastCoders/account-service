@@ -117,7 +117,7 @@ Resources:
   ApiListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
-      LoadBalancerArn: !Sub '{{resolve:secretsmanager:${AppName}/${AppEnv}/secrets/resources:SecretString:ServiceALB}}'
+      LoadBalancerArn: !Sub '{{resolve:secretsmanager:${AppName}/${AppEnv}/secrets/resources:SecretString:LoadBalancer}}'
       DefaultActions:
         - Type: forward
           TargetGroupArn: !Ref ServiceTargetGroup
