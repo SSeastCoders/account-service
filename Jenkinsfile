@@ -8,7 +8,7 @@ pipeline {
         commitIDShort = sh(returnStdout: true, script: "git rev-parse --short HEAD")
         organizationName = 'SSEastCoders'
         appEnv = 'jtdo'
-        servicePort = 8225
+        servicePort = 8223
         healthPath = '/api/v1/accounts/health'
     }
     stages {
@@ -43,11 +43,11 @@ pipeline {
                         # authenticate aws account
                         aws ecr get-login-password --region ${awsRegion} | docker login --username AWS --password-stdin ${awsID}.dkr.ecr.${awsRegion}.amazonaws.com
 
-                        docker build -t ${awsID}.dkr.ecr.us-east-1.amazonaws.com/${serviceName}:${commitIDShort} .
-                        docker push ${awsID}.dkr.ecr.us-east-1.amazonaws.com/${serviceName}:${commitIDShort}
+                        docker build -t ${awsID}.dkr.ecr.${awsRegion}.amazonaws.com/${serviceName}:${commitIDShort} .
+                        docker push ${awsID}.dkr.ecr.${awsRegion}.amazonaws.com/${serviceName}:${commitIDShort}
 
-                        docker build -t ${awsID}.dkr.ecr.us-east-1.amazonaws.com/${serviceName}:latest .
-                        docker push ${awsID}.dkr.ecr.us-east-1.amazonaws.com/${serviceName}:latest
+                        docker build -t ${awsID}.dkr.ecr.${awsRegion}.amazonaws.com/${serviceName}:latest .
+                        docker push ${awsID}.dkr.ecr.${awsRegion}.amazonaws.com/${serviceName}:latest
                     '''
                 }
             }
