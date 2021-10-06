@@ -64,7 +64,7 @@ pipeline {
                 sh '''
                     aws cloudformation deploy \
                     --stack-name ${serviceName}-stack \
-                    --template-file deploystack.yml \
+                    --template-file deploystack.yaml \
                     --parameter-overrides \
                         AppEnv=${appEnv} \
                         AppName=${organizationName} \
