@@ -63,7 +63,6 @@ pipeline {
 
                 sh '''
                     aws cloudformation deploy \
-                    aws configure set region ${awsRegion} \
                     --stack-name ${serviceName}-stack \
                     --template-file deploystack.yaml \
                     --parameter-overrides \
@@ -73,7 +72,8 @@ pipeline {
                         ServicePort=${servicePort} \
                         HealthPath=${healthPath} \
                     --capabilities CAPABILITY_NAMED_IAM \
-                    --no-fail-on-empty-changeset
+                    --no-fail-on-empty-changeset \
+                    --region ${awsRegion}
                 '''
             }
         }
