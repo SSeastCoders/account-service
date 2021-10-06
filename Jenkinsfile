@@ -63,6 +63,7 @@ pipeline {
 
                 sh '''
                     aws cloudformation deploy \
+                    aws configure set region ${awsRegion} \
                     --stack-name ${serviceName}-stack \
                     --template-file deploystack.yaml \
                     --parameter-overrides \
