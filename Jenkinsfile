@@ -58,7 +58,7 @@ pipeline {
             steps {
 
                 echo "Fetching CloudFormation template 'deploystack.yml'..."
-                sh "wget https://raw.githubusercontent.com/${organizationName}/${githubServiceName}/${appEnv}/deploystack.yml"
+                sh "wget https://raw.githubusercontent.com/${organizationName}/${githubServiceName}/${appEnv}/deploystack.yaml"
                 echo "Deploying ${serviceName}..."
 
                 sh '''
