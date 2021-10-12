@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account-api-deployment
+  namespace: eastcoders
+  labels:
+    app: banking
+    type: api
+    tier: backend
+spec:
+  template:
+      metadata:
+        name: account-api-pod
+        namespace: eastcoders
+        labels:
+          app: banking
+          type: api
+          tier: backend
+      spec:
+        containers:
+          - name: account-api-container
+            image: 326848027964.dkr.ecr.us-east-1.amazonaws.com/account-service:latest
+            resources:
+              requests:
+                memory: "256Mi"
+                cpu: "128m"
+              limits:
+                memory: "512Mi"
+                cpu: "256m"
+            envFrom:
+            - configMapRef:
+                name: api-envs
+            imagePullPolicy: Always
+            ports:
+            - containerPort: 8223
+        imagePullSecrets:
+        - name: ecr-auth
+  replicas: 2
+  selector:
+    matchLabels:
+      app: banking
+      type: api
+      tier: backend

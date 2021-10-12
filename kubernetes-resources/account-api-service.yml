@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: account-api-service
+  namespace: eastcoders
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 8223
+    targetPort: 8223
+  selector:
+      app: banking
+      type: api
+      tier: backend

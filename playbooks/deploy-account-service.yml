@@ -1,0 +1,10 @@
+- name: Deploy account-service to eks cluster
+  hosts: localhost
+  tasks:
+  - name: Deploy account-api Service
+    shell: |
+      kubectl apply -f ../kubernetes-resources/account-api-service.yml
+
+  - name: Deploy account-api
+    shell: |
+      kubectl apply -f ../kubernetes-resources/account-api-deployment.yml
