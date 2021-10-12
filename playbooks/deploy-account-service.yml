@@ -7,4 +7,4 @@
 
   - name: Deploy account-api
     shell: |
-      kubectl apply -f ../kubernetes-resources/account-api-deployment.yml
+      kubectl apply -f ../kubernetes-resources/account-api-deploy.yml
