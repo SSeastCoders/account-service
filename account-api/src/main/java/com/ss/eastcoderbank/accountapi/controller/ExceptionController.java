@@ -31,32 +31,37 @@ public class ExceptionController {
             errors.put(fieldName, errorMessage);
             errors.put("message", errors.get("message") + " " + errorMessage);
         });
-        log.info(errors.toString());
+        log.warn(errors.toString());
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorMessage> forbidden(AccessDeniedException exception) {
+        log.warn("Access is forbidden, user does not have permission to access this resource.");
         return new ResponseEntity<>(new ErrorMessage(HttpStatus.FORBIDDEN.toString(), exception.getMessage()), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(JsonParseException.class)
     public ResponseEntity<ErrorMessage> jsonParseFailure(JsonParseException exception) {
+        log.warn("JSON is not valid.");
         return new ResponseEntity<>(new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), "Not valid json. " +  exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorMessage> noUserFound(UserNotFoundException exception) {
+        log.warn("User is not found.");
         return new ResponseEntity<>(new ErrorMessage(HttpStatus.NOT_FOUND.toString(), exception.getMessage()), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(AccountNotFoundException.class)
     public ResponseEntity<ErrorMessage> duplicateConstraints(AccountNotFoundException exception) {
+        log.warn("Account is not found.");
         return new ResponseEntity<>(new ErrorMessage(HttpStatus.NOT_FOUND.toString(), exception.getMessage()), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(AccountNotEmptyException.class)
     public ResponseEntity<ErrorMessage> duplicateConstraints(AccountNotEmptyException exception) {
+        log.warn("Account is not empty.");
         return new ResponseEntity<>(new ErrorMessage(HttpStatus.PRECONDITION_FAILED.toString(), exception.getMessage()), HttpStatus.PRECONDITION_FAILED);
     }
 }
