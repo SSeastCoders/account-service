@@ -15,7 +15,6 @@ import com.ss.eastcoderbank.core.transferdto.AccountDto;
 import com.ss.eastcoderbank.core.transfermapper.AccountMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -112,5 +111,12 @@ public class AccountService {
             req = accountRepository.findAll(PageRequest.of(pageNumber, pageSize)).map(account -> accountMapper.mapToDto(account));
         }
         return req;
+    }
+
+    public Page<AccountDto> getAccountsByFilter(Integer pageNumber, Integer pageSize, boolean asc, String sort, AccountOptions options) {
+        Pageable pageable = (sort != null) ? PageRequest.of(pageNumber, pageSize, Sort.by(asc ? Sort.Direction.ASC: Sort.Direction.DESC, sort)) : PageRequest.of(pageNumber, pageSize);
+      return accountRepository.findAccountsByFilter(options.getNickName(),
+                    options.getFromDate(), options.getToDate(), options.getFromAmount(),
+                    options.getToAmount(), options.getAccountType(), options.getActiveStatus(), pageable).map(accountMapper::mapToDto);
     }
 }
