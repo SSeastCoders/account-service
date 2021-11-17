@@ -7,6 +7,7 @@ import com.ss.eastcoderbank.core.transferdto.AccountDto;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,7 @@ import java.util.List;
 @Slf4j
 @CrossOrigin
 @RestController
+@NoArgsConstructor
 @RequestMapping("api/v1/accounts")
 public class AccountController {
     @Autowired
