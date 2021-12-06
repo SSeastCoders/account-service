@@ -2,16 +2,20 @@ package com.ss.eastcoderbank.accountapi.controller;
 
 import com.ss.eastcoderbank.accountapi.dto.CreateUserAccountDto;
 import com.ss.eastcoderbank.accountapi.dto.UpdateAccountDto;
+import com.ss.eastcoderbank.accountapi.service.AccountOptions;
 import com.ss.eastcoderbank.accountapi.service.AccountService;
+import com.ss.eastcoderbank.core.model.account.AccountType;
 import com.ss.eastcoderbank.core.transferdto.AccountDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @CrossOrigin
@@ -44,8 +48,23 @@ public class AccountController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AccountDto>> getAllAccounts() {
-        return new ResponseEntity<>(accountService.getAccounts(), HttpStatus.OK);
+    public ResponseEntity<Page<AccountDto>> getAllAccounts(
+            @RequestParam Integer page,
+            @RequestParam Integer size,
+            @RequestParam(required = false) boolean asc,
+            @RequestParam(required = false) String sort,
+            @RequestParam(required = false, defaultValue = "") String nickname,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            @RequestParam(required = false) LocalDate fromDate,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            @RequestParam(required = false) LocalDate toDate,
+            @RequestParam(required = false) Float fromAmount,
+            @RequestParam(required = false) Float toAmount,
+            @RequestParam(required = false) AccountType type,
+            @RequestParam(required = false) Boolean status
+    ) {
+        AccountOptions options = new AccountOptions(nickname, fromDate, toDate, fromAmount, toAmount, type, status);
+        return new ResponseEntity<>(accountService.getAccountsByFilter(page, size, asc, sort, options), HttpStatus.OK);
     }
 
     @GetMapping("/accountsPage")
